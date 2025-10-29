@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Feedback 💬</title>
+  <style>
+    html, body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #bgImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.35;
+      filter: blur(1px);
+    }
+
+    nav {
+      background: linear-gradient(90deg, #43a047, #66bb6a);
+      padding: 15px 0;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffff8d;
+      background-color: rgba(255,255,255,0.15);
+    }
+
+    .page-wrapper {
+      max-width: 700px;
+      margin: 180px auto 20px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      flex: 1;
+    }
+
+    h1 {
+      text-align: center;
+      color: #1b5e20;
+      background-color: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    textarea, input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1rem;
+      border: 2px solid #4CAF50;
+      border-radius: 8px;
+      background-color: #f9fff9;
+      color: #2e7d32;
+      font-weight: bold;
+      box-sizing: border-box;
+    }
+
+    input[type="email"] {
+      text-transform: lowercase;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: linear-gradient(90deg, #43a047, #388e3c);
+      color: white;
+      font-size: 0.9rem;
+      border-top: 3px solid #2e7d32;
+    }
+  </style>
+</head>
+
+<body>
+  <img id="bgImage" src="clock-bg.jpg" alt="Clock Background" />
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="page-wrapper">
+    <h1>💬 Feedback</h1>
+    <form>
+      <input type="text" placeholder=" enter Your Name" required />
+      <input type="email" placeholder=" Enter Your Gmail" required />
+      <textarea rows="5" placeholder="Your Feedback" required></textarea>
+      <button type="submit">📨 Submit Feedback</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 DCME | Smart Task Reminder | All rights reserved.
+  </footer>
+</body>
+</html>

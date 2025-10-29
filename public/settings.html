@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Settings ⚙️</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #222;
+    }
+
+    #bgImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.35;
+      filter: blur(1px);
+    }
+
+    nav {
+      background-color: #2e7d32;
+      padding: 15px 0;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    nav a:hover {
+      background-color: #66bb6a;
+      color: #ffffe0;
+      transform: scale(1.05);
+    }
+
+    .page-wrapper {
+      flex: 1;
+      max-width: 700px;
+      margin: 180px auto 20px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1b5e20;
+      background-color: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #2e7d32;
+      color: #e8f5e9;
+      font-size: 0.9rem;
+      border-top: 3px solid #1b5e20;
+      width: 100%;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+      border-radius: 0 0 8px 8px;
+    }
+  </style>
+</head>
+<body>
+  <img id="bgImage" src="clock-bg.jpg" alt="Clock Background" />
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <h1>⚙️ Settings</h1>
+
+    <label><input type="checkbox" id="editToggle" /> Enable Task Editing</label>
+    <label><input type="checkbox" id="restoreToggle" /> Enable Restore from History</label>
+    <label><input type="checkbox" id="soundToggle" /> Enable Sound Notifications</label>
+    <label><input type="checkbox" id="voiceToggle" /> Enable Voice Reminders</label>
+  </div>
+
+  <footer>
+    © 2025 DCME | Smart Task Reminder | All rights reserved.
+  </footer>
+
+  <script>
+    const settingsKeys = ["editToggle", "restoreToggle", "soundToggle", "voiceToggle"];
+
+    window.onload = () => {
+      settingsKeys.forEach(key => {
+        const checkbox = document.getElementById(key);
+        const saved = localStorage.getItem(key);
+        checkbox.checked = saved === "true";
+        checkbox.addEventListener("change", () => {
+          localStorage.setItem(key, checkbox.checked.toString());
+        });
+      });
+    };
+  </script>
+</body>
+</html>

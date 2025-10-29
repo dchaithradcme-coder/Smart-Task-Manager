@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task History ⌛</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: Arial, sans-serif;
+      background-color: #f0f4f8;
+      color: #222;
+    }
+
+    #bgImage {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.35;
+      filter: blur(1px);
+    }
+
+    nav {
+      background-color: #2e7d32;
+      padding: 15px 0;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    nav a:hover {
+      background-color: #66bb6a;
+      color: #ffffe0;
+      transform: scale(1.05);
+    }
+
+    .page-wrapper {
+      flex: 1;
+      max-width: 700px;
+      margin: 180px auto 20px;
+      padding: 20px;
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #1b5e20;
+      background-color: #e8f5e9;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      background: #ffffff;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .task-content {
+      margin-bottom: 10px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .button-group button {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .restore-btn {
+      background-color: #43a047;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #e53935;
+      color: white;
+    }
+
+    .restore-btn:hover {
+      background-color: #388e3c;
+    }
+
+    .delete-btn:hover {
+      background-color: #c62828;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #2e7d32;
+      color: #e8f5e9;
+      font-size: 0.9rem;
+      border-top: 3px solid #1b5e20;
+      width: 100%;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
+      border-radius: 0 0 8px 8px;
+    }
+  </style>
+</head>
+<body>
+  <img id="bgImage" src="clock-bg.jpg" alt="Clock Background" />
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="tasks.html">Tasks</a></li>
+      <li><a href="history.html">History</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+    <h1>📚 Task History</h1>
+    <ul id="historyList"></ul>
+  </div>
+
+  <footer>
+    © 2025 DCME | Smart Task Reminder | All rights reserved.
+  </footer>
+
+  <script>
+    function restoreTask(title) {
+      const history = JSON.parse(localStorage.getItem("deletedTasks")) || [];
+      const entry = history.find(h => h.title === title);
+      if (!entry) return;
+
+      const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+      tasks.push({ title });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+
+      const updatedHistory = history.filter(h => h.title !== title);
+      localStorage.setItem("deletedTasks", JSON.stringify(updatedHistory));
+      location.reload();
+    }
+
+    function deleteHistoryTask(title) {
+      const history = JSON.parse(localStorage.getItem("deletedTasks")) || [];
+      const updatedHistory = history.filter(h => h.title !== title);
+      localStorage.setItem("deletedTasks", JSON.stringify(updatedHistory));
+      location.reload();
+    }
+
+    window.onload = () => {
+      const historyList = document.getElementById("historyList");
+      const saved = JSON.parse(localStorage.getItem("deletedTasks")) || [];
+
+      saved.forEach(task => {
+        const li = document.createElement("li");
+
+        const content = document.createElement("div");
+        content.className = "task-content";
+        content.innerHTML = `${task.html}<br><small>🗑️ Deleted on ${task.deletedOn}</small>`;
+
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "button-group";
+
+        const restoreBtn = document.createElement("button");
+        restoreBtn.className = "restore-btn";
+        restoreBtn.textContent = "♻️ Restore";
+        restoreBtn.onclick = () => restoreTask(task.title);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "delete-btn";
+        deleteBtn.textContent = "🗑️ Remove";
+        deleteBtn.onclick = () => deleteHistoryTask(task.title);
+
+        buttonGroup.appendChild(restoreBtn);
+        buttonGroup.appendChild(deleteBtn);
+
+        li.appendChild(content);
+        li.appendChild(buttonGroup);
+        historyList.appendChild(li);
+      });
+    };
+  </script>
+</body>
+</html>
